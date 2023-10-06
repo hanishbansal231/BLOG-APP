@@ -1,8 +1,13 @@
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../services/operations/authAPI';
 function Nabvar() {
     const { isLoggedIn } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
     console.log(isLoggedIn);
+    async function handelLogout(){
+        await dispatch(logout());
+    }
     return (
         <div className=' shadow-[0_0_10px_black] h-[70px]'>
             <nav className='flex justify-between max-w-[1180px] pt-4 m-auto'>
@@ -36,7 +41,7 @@ function Nabvar() {
                 }
                 {
                     isLoggedIn && (
-                        <Link to={'/logout'}>
+                        <Link onClick={handelLogout}>
                         <button className='text-white bg-red-400 px-4 py-1 rounded-sm cursor-pointer font-semibold hover:bg-red-500 duration-300 transition-all'>Logout</button>
                     </Link>
                     )

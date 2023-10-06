@@ -25,6 +25,9 @@ const userSchema = new Schema({
         minLength: [8, 'Password must be at least 8 charchter'],
         select: false,
     },
+    token: {
+        type: String,
+    },
     blogs: [
         {
             type: mongoose.Schema.Types.ObjectId,

@@ -6,15 +6,29 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import CreateBlog from './pages/CreateBlog';
 import MyBlogs from './pages/MyBlogs';
+import { useSelector } from 'react-redux';
 
 function App() {
+
+  const { checkEdit } = useSelector((state) => state.blog)
+  console.log(checkEdit)
   return (
     <div>
       <Nabvar />
       <Routes>
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/createblog' element={<CreateBlog />} />
+        {
+          checkEdit
+            ?
+            (
+              <Route path='/editblog' element={<CreateBlog />} />
+            )
+            :
+            (
+              <Route path='/createblog' element={<CreateBlog />} />
+            )
+        }
         <Route path='/myblogs' element={<MyBlogs />} />
       </Routes>
     </div>

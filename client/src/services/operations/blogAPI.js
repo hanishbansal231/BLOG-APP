@@ -24,13 +24,13 @@ export function myBlogs(token) {
         const toastId = toast.loading('Loading...');
         let result = []
         try {
-           const response = await apiConnector('GET',BLOG_ENDPOINT.MY_BLOG,null,{
-            Authorization: `Bearer ${token}`
-           });
-           if(!response?.data?.success){
-            console.log('Error Data not found');
-           }
-           result = response?.data?.blog?.blogs;
+            const response = await apiConnector('GET', BLOG_ENDPOINT.MY_BLOG, null, {
+                Authorization: `Bearer ${token}`
+            });
+            if (!response?.data?.success) {
+                console.log('Error Data not found');
+            }
+            result = response?.data?.blog?.blogs;
         } catch (Error) {
             console.log(Error);
         }
@@ -39,16 +39,35 @@ export function myBlogs(token) {
     }
 }
 
-export function deleteMyBlogs(token,id) {
+export function deleteMyBlogs(token, id) {
     return async () => {
         const toastId = toast.loading('Loading...');
         try {
             console.log(id)
             console.log(`${BLOG_ENDPOINT.DELETE_MY_BLOG}${id}`);
-           const response = await apiConnector('DELETE',`${BLOG_ENDPOINT.DELETE_MY_BLOG}${id}`,null,{
-            Authorization: `Bearer ${token}`
-           });
-           console.log(response);
+            const response = await apiConnector('DELETE', `${BLOG_ENDPOINT.DELETE_MY_BLOG}${id}`, null, {
+                Authorization: `Bearer ${token}`
+            });
+            console.log(response);
+        } catch (Error) {
+            console.log(Error);
+        }
+        toast.dismiss(toastId);
+    }
+}
+
+export function updateMyBlogs(token, id, data, navigate) {
+    return async () => {
+        const toastId = toast.loading('Loading...');
+        try {
+            console.log(id)
+            console.log(`${BLOG_ENDPOINT.DELETE_MY_BLOG}${id}`);
+            const response = await apiConnector('PUT', `${BLOG_ENDPOINT.UPDATE_MY_BLOG}${id}`, data, {
+                Authorization: `Bearer ${token}`
+            });
+            console.log(response);
+            navigate('/myblogs');
+
         } catch (Error) {
             console.log(Error);
         }

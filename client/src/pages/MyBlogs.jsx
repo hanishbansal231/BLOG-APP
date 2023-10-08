@@ -3,10 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteMyBlogs, myBlogs } from "../services/operations/blogAPI";
 import { AiFillDelete } from 'react-icons/ai';
 import { BsPencilSquare } from 'react-icons/bs';
+import { setBlogData, setEdit } from "../redux/slices/BlogSlice";
+import { useNavigate } from "react-router-dom";
 function MyBlogs() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [myBlog, setMyBlog] = useState([]);
     const { isLoggedIn } = useSelector((state) => state.auth);
+    const { checkEdit } = useSelector((state) => state.blog);
+    console.log(checkEdit);
     async function fetchMyBlog() {
         try {
             const result = await dispatch(myBlogs(isLoggedIn));
@@ -17,12 +22,18 @@ function MyBlogs() {
     }
     async function deleteMyBlog(data) {
         try {
-            await dispatch(deleteMyBlogs(isLoggedIn,data._id));
+            await dispatch(deleteMyBlogs(isLoggedIn, data._id));
             const result = await dispatch(myBlogs(isLoggedIn));
             setMyBlog(result);
         } catch (err) {
             console.log(err);
         }
+    }
+    function editMyBlog(data) {
+        console.log(data._id);
+        dispatch(setEdit(true));
+        dispatch(setBlogData(data));
+        navigate('/editblog');
     }
     useEffect(() => {
         fetchMyBlog();
@@ -43,7 +54,7 @@ function MyBlogs() {
                                     </p>
                                 </div>
                                 <div className="flex gap-4 font-semibold text-2xl text-red-400">
-                                    <span className="cursor-pointer"><BsPencilSquare /></span>
+                                    <span onClick={() => editMyBlog(item)} className="cursor-pointer"><BsPencilSquare /></span>
                                     <span onClick={() => deleteMyBlog(item)} className="cursor-pointer"><AiFillDelete /></span>
                                 </div>
                             </div>

@@ -1,17 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    editTrue: false,
+    blogData: [],
+    checkEdit: false,
 }
 
 const blogSlice = createSlice({
     name: 'blog',
     initialState,
     reducers: {
-        setEdit:(state,action) => {
-            state.editTrue = action?.payload;
+        setEdit: (state, action) => {
+            state.checkEdit = action?.payload;
+        },
+        setBlogData: (state, action) => {
+            console.log(action);
+            state.blogData = action?.payload;
         }
     },
 });
-export const {  } = blogSlice.actions;
+export const { setEdit, setBlogData } = blogSlice.actions;
 export default blogSlice.reducer;

@@ -5,13 +5,13 @@ import { apiConnector } from '../apiConnector';
 
 export function createBlog(data, token, navigate) {
     return async () => {
-        console.log(data);
         const toastId = toast.loading('Loading...');
         try {
             const response = await apiConnector('POST', BLOG_ENDPOINT.CREATE_BLOG, data, {
                 Authorization: `Bearer ${token}`
             });
             console.log(response);
+            navigate('/myblogs');
         } catch (Error) {
             console.log(Error);
         }
@@ -43,8 +43,6 @@ export function deleteMyBlogs(token, id) {
     return async () => {
         const toastId = toast.loading('Loading...');
         try {
-            console.log(id)
-            console.log(`${BLOG_ENDPOINT.DELETE_MY_BLOG}${id}`);
             const response = await apiConnector('DELETE', `${BLOG_ENDPOINT.DELETE_MY_BLOG}${id}`, null, {
                 Authorization: `Bearer ${token}`
             });
@@ -60,8 +58,6 @@ export function updateMyBlogs(token, id, data, navigate) {
     return async () => {
         const toastId = toast.loading('Loading...');
         try {
-            console.log(id)
-            console.log(`${BLOG_ENDPOINT.DELETE_MY_BLOG}${id}`);
             const response = await apiConnector('PUT', `${BLOG_ENDPOINT.UPDATE_MY_BLOG}${id}`, data, {
                 Authorization: `Bearer ${token}`
             });
@@ -72,5 +68,23 @@ export function updateMyBlogs(token, id, data, navigate) {
             console.log(Error);
         }
         toast.dismiss(toastId);
+    }
+}
+
+export function allBlogs(token) {
+    return async () => {
+        const toastId = toast.loading('Loading...');
+        let result = [];
+        try {
+            const response = await apiConnector('GET',BLOG_ENDPOINT.ALL_BLOG,null, {
+                Authorization: `Bearer ${token}`
+            });
+            result = response?.data?.blog;
+
+        } catch (Error) {
+            console.log(Error);
+        }
+        toast.dismiss(toastId);
+        return result;
     }
 }

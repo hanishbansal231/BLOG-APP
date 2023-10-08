@@ -10,7 +10,7 @@ const getAllBlog = async (req, res, next) => {
             return next(new AppError('Blog are not found...', 402));
         }
         return res.status(200).json({
-            success: trWue,
+            success: true,
             message: 'Blog Found Successfully...',
             blog,
         });

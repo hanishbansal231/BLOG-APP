@@ -13,7 +13,6 @@ const blogSlice = createSlice({
             state.checkEdit = action?.payload;
         },
         setBlogData: (state, action) => {
-            console.log(action);
             state.blogData = action?.payload;
         }
     },

@@ -57,7 +57,6 @@ function CreateBlog() {
                 return;
             }
             const formDatas = new FormData();
-            console.log(previewImage);
             formDatas.append('title', formData.title);
             formDatas.append('description', formData.description);
             formDatas.append('image', formData.image);

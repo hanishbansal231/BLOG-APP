@@ -11,7 +11,6 @@ function MyBlogs() {
     const [myBlog, setMyBlog] = useState([]);
     const { isLoggedIn } = useSelector((state) => state.auth);
     const { checkEdit } = useSelector((state) => state.blog);
-    console.log(checkEdit);
     async function fetchMyBlog() {
         try {
             const result = await dispatch(myBlogs(isLoggedIn));
@@ -30,7 +29,6 @@ function MyBlogs() {
         }
     }
     function editMyBlog(data) {
-        console.log(data._id);
         dispatch(setEdit(true));
         dispatch(setBlogData(data));
         navigate('/editblog');

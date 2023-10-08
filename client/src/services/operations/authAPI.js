@@ -29,7 +29,7 @@ export function login(data, navigate) {
             localStorage.setItem('data', JSON.stringify(response?.data?.user));
             localStorage.setItem('isLoggedIn', response?.data?.user?.token);
             dispatch(setData(response?.data?.user));
-            navigate('/');
+            navigate('/blogs');
         } catch (e) {
             console.log(e);
             console.log(e.message);
@@ -38,11 +38,12 @@ export function login(data, navigate) {
     }
 }
 
-export function logout() {
+export function logout(navigate) {
     return async (dispatch) => {
         const toastId = toast.loading('Loading...');
         localStorage.clear();
         dispatch(setData(null));
+        navigate('/login');
         
         toast.dismiss(toastId);
     }

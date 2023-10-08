@@ -11,5 +11,5 @@ export const BLOG_ENDPOINT = {
     CREATE_BLOG: BASE_URL + '/blog/createblog',
     MY_BLOG: BASE_URL + '/blog/userblog',
     DELETE_MY_BLOG: BASE_URL + '/blog/deleteblog/',
-    UPDATE_MY_BLOG: BASE_URL + '/blog/editblog/',
+    ALL_BLOG: BASE_URL + '/blog/getallblog/',
 }

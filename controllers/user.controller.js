@@ -56,7 +56,6 @@ const signUp = async (req, res, next) => {
 const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
-        console.log(password);
         if (!email || !password) {
             return next(new AppError('All field are mandatory...', 403));
         }
@@ -68,7 +67,6 @@ const login = async (req, res, next) => {
         }
 
         const token = await user.generateJWTToken();
-        console.log(token);
         user.token = token;
         user.password = undefined;
 

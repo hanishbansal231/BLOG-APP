@@ -1,11 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../services/operations/authAPI';
 function Nabvar() {
+    const navigate = useNavigate();
     const { isLoggedIn } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     async function handelLogout(){
-        await dispatch(logout());
+        await dispatch(logout(navigate));
     }
     return (
         <div className=' shadow-[0_0_10px_black] h-[70px]'>

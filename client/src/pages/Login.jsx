@@ -39,7 +39,7 @@ function Login() {
         <div className="flex items-center justify-center h-[90vh]">
             <form noValidate onSubmit={onFormSubmit} className="bg-red-400 min-w-[30em] rounded-sm p-3">
                 <h2 className="text-center text-2xl font-semibold">
-                    Register Form
+                    Login Form
                 </h2>
                 <div className="flex flex-col gap-2">
                     <label className="text-lg" htmlFor="email">Email</label>

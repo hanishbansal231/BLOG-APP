@@ -13,6 +13,7 @@ function CreateBlog() {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
+        image: ''
     });
     function handleUserInput(e) {
         const { name, value } = e.target;
@@ -26,6 +27,10 @@ function CreateBlog() {
         e.preventDefault();
         const uploadFile = e.target.files[0];
         if (uploadFile) {
+            setFormData((prev) => ({
+                ...prev,
+                image:uploadFile,
+            }))
             const fileReader = new FileReader();
             fileReader.readAsDataURL(uploadFile);
             fileReader.addEventListener('load', function () {
@@ -44,7 +49,7 @@ function CreateBlog() {
             const formDatas = new FormData();
             formDatas.append('title', formData.title);
             formDatas.append('description', formData.description);
-            formDatas.append('image', previewImage);
+            formDatas.append('image', formData.image);
             dispatch(updateMyBlogs(isLoggedIn, blogData._id, formDatas, navigate));
         } else {
             if (!formData.title || !formData.description || !previewImage) {
@@ -52,9 +57,10 @@ function CreateBlog() {
                 return;
             }
             const formDatas = new FormData();
+            console.log(previewImage);
             formDatas.append('title', formData.title);
             formDatas.append('description', formData.description);
-            formDatas.append('image', previewImage);
+            formDatas.append('image', formData.image);
             dispatch(createBlog(formDatas, isLoggedIn, navigate));
         }
     }

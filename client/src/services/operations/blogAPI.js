@@ -5,9 +5,9 @@ import { apiConnector } from '../apiConnector';
 
 export function createBlog(data, token, navigate) {
     return async () => {
+        console.log(data);
         const toastId = toast.loading('Loading...');
         try {
-            console.log("TOKEN", token);
             const response = await apiConnector('POST', BLOG_ENDPOINT.CREATE_BLOG, data, {
                 Authorization: `Bearer ${token}`
             });

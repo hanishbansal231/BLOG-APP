@@ -22,7 +22,7 @@ const getAllBlog = async (req, res, next) => {
 const createBlog = async (req, res, next) => {
     try {
         const id = req.user.id;
-        console.log(id);
+        console.log(req.file);
         const { title, description } = req.body;
         if (!title || !description) {
             return next(new AppError('All field are mandatory', 402));
@@ -30,12 +30,17 @@ const createBlog = async (req, res, next) => {
         const blog = await Blog.create({
             title,
             description,
+            image: {
+                public_id: 'Dummy',
+                secure_url: 'Dummy'
+            },
             user: id,
         });
         if (!blog) {
             return next(new AppError('blog not created please try again...', 403));
         }
         if (req.file) {
+            console.log(req.file);
             try {
                 const result = await cloudinary.v2.uploader.upload(req.file.path, {
                     folder: 'Blog',
@@ -53,8 +58,8 @@ const createBlog = async (req, res, next) => {
         const user = await User.findByIdAndUpdate(id, {
             $push: { blogs: blog._id },
         }, { new: true }).populate('blogs').exec();
-        console.log(user);
         await blog.save();
+        await user.save();
         return res.status(200).json({
             success: true,
             message: 'Blog Created Successfully',
@@ -69,19 +74,22 @@ const editBlog = async (req, res, next) => {
     try {
         console.log("Starting")
         const { id } = req.params;
-        const blog = await Blog.findByIdAndUpdate(
-            { _id: id },
-            {
-                $set: req.body,
-            },
-            {
-                new: true,
-            }
-        );
-
+        const { title, description } = req.body;
+        const blog = await Blog.findById({ _id: id });
+        console.log(blog);
         if (!blog) {
             return next(new AppError('Blog not found...', 403));
         }
+
+        const updateBlog = await Blog.findByIdAndUpdate({ _id: id }, {
+            title: title,
+            description: description,
+            image: {
+                public_id: 'Dummy',
+                secure_url: 'Dummy',
+            }
+
+        });
 
         if (req.file) {
             try {
@@ -89,20 +97,20 @@ const editBlog = async (req, res, next) => {
                     folder: 'blog'
                 });
                 if (result) {
-                    blog.image.public_id = result.public_id;
-                    blog.image.secure_url = result.secure_url;
+                    updateBlog.image.public_id = result.public_id;
+                    updateBlog.image.secure_url = result.secure_url;
                     fs.rm(`uploads/${req.file.filename}`);
                 }
-                await blog.save();
+                await updateBlog.save();
             } catch (e) {
                 return next(new AppError(e.message, 500));
             }
         }
-
+        console.log(updateBlog);
         res.status(200).json({
             success: true,
             message: 'Blog updated successfully...',
-            blog,
+            blog: updateBlog,
         })
 
 

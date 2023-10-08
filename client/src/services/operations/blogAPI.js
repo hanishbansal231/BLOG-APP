@@ -18,3 +18,40 @@ export function createBlog(data, token, navigate) {
         toast.dismiss(toastId);
     }
 }
+
+export function myBlogs(token) {
+    return async () => {
+        const toastId = toast.loading('Loading...');
+        let result = []
+        try {
+           const response = await apiConnector('GET',BLOG_ENDPOINT.MY_BLOG,null,{
+            Authorization: `Bearer ${token}`
+           });
+           if(!response?.data?.success){
+            console.log('Error Data not found');
+           }
+           result = response?.data?.blog?.blogs;
+        } catch (Error) {
+            console.log(Error);
+        }
+        toast.dismiss(toastId);
+        return result;
+    }
+}
+
+export function deleteMyBlogs(token,id) {
+    return async () => {
+        const toastId = toast.loading('Loading...');
+        try {
+            console.log(id)
+            console.log(`${BLOG_ENDPOINT.DELETE_MY_BLOG}${id}`);
+           const response = await apiConnector('DELETE',`${BLOG_ENDPOINT.DELETE_MY_BLOG}${id}`,null,{
+            Authorization: `Bearer ${token}`
+           });
+           console.log(response);
+        } catch (Error) {
+            console.log(Error);
+        }
+        toast.dismiss(toastId);
+    }
+}

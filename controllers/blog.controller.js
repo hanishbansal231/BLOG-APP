@@ -149,7 +149,8 @@ const deleteBlog = async (req, res, next) => {
 const getUserBlog = async (req, res, next) => {
     try {
         console.log('Starting...');
-        const { id } = req.params;
+        // const { id } = req.params;
+        const id = req.user.id;
         console.log(id);
         const blog = await User.findById({ _id: id }).populate('blogs').exec();
         return res.status(200).json({

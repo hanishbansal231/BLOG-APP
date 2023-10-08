@@ -6,9 +6,9 @@ const router = Router();
 
 router.get('/getallblog', isLoggedIn, getAllBlog);
 router.get('/getblog/:id', getBlogById);
-router.get('/userblog/:id', getUserBlog);
+router.get('/userblog',isLoggedIn, getUserBlog);
 router.post('/createblog', isLoggedIn, upload.single('image'), createBlog);
 router.put('/editblog/:id', upload.single('image'), editBlog);
-router.delete('/deleteblog/:id', deleteBlog);
+router.delete('/deleteblog/:id',isLoggedIn, deleteBlog);
 
 export default router;

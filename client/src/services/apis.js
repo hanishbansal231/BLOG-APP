@@ -1,3 +1,5 @@
+
+
 const BASE_URL = ' http://localhost:3001/api/v1';
 
 export const USER_ENDPOINT = {
@@ -7,4 +9,6 @@ export const USER_ENDPOINT = {
 
 export const BLOG_ENDPOINT = {
     CREATE_BLOG: BASE_URL + '/blog/createblog',
+    MY_BLOG: BASE_URL + '/blog/userblog',
+    DELETE_MY_BLOG: BASE_URL + '/blog/deleteblog/',
 }

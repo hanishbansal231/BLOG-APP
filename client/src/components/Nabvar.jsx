@@ -4,7 +4,6 @@ import { logout } from '../services/operations/authAPI';
 function Nabvar() {
     const { isLoggedIn } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
-    console.log(isLoggedIn);
     async function handelLogout(){
         await dispatch(logout());
     }
